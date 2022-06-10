@@ -1,69 +1,69 @@
-export class Canciones{
-    constructor(nombreCancion, tipoCancion, tiempoCancion){
+export class Canciones {
+    constructor(nombreCancion, tipoCancion, tiempoCancion) {
         this._nombreCancion = nombreCancion
         this._tipoCancion = tipoCancion
         this._tiempoCancion = tiempoCancion
     }
-    get nombreCancion(){
+    get nombreCancion() {
         return this._nombreCancion
     }
-    set nombreCancion(nombreCancion){
+    set nombreCancion(nombreCancion) {
         this._nombreCancion = nombreCancion
     }
-    get tipoCancion(){
+    get tipoCancion() {
         return this._tipoCancion
     }
-    set tipoCancion(tipoCancion){
+    set tipoCancion(tipoCancion) {
         this._tipoCancion = tipoCancion
     }
-    get tiempoCancion(){
+    get tiempoCancion() {
         return this._tiempoCancion
     }
-    set tiempoCancion(tiempoCancion){
+    set tiempoCancion(tiempoCancion) {
         this._tiempoCancion = tiempoCancion
     }
 
-    toString(){
+    toString() {
         return `Nombre: ${this._nombreCancion}, Tipo: ${this._tipoCancion}, Tiempo: ${this._tiempoCancion}`
     }
 }
 
 
-export class Nodo{
-    constructor(dato){
+export class Nodo {
+    constructor(dato) {
         this.dato = dato
         this.siguiente = null
         this.anterior = null
     }
 }
 
-export class listaCircularDoble{
-    constructor(){
+export class listaCircularDoble {
+    constructor() {
         this.primero = null
         this.ultimo = null
     }
 
-    estaVacia(){
-        if (this.primero === null){
+    estaVacia() {
+        if (this.primero === null) {
             return true
         }
-        else{
+        else {
             return false
         }
     }
 
-    unirNodos(){
-        if (this.primero != null){
+    unirNodos() {
+        if (this.primero != null) {
             this.primero.anterior = this.ultimo
             this.ultimo.siguiente = this.primero
         }
     }
 
-    agregarAlinicio(dato){
-        if (this.estaVacia()){
+    agregarAlinicio(dato) {
+        if (this.estaVacia()) {
             this.primero = this.ultimo = new Nodo(dato)
         }
-        else{
+        else {
             let auxiliar = new Nodo(dato)
             auxiliar.siguiente = this.primero
             this.primero.anterior = auxiliar
@@ -72,11 +72,11 @@ export class listaCircularDoble{
         this.unirNodos()
     }
 
-    agregarAlfinal(dato){
-        if (this.estaVacia()){
+    agregarAlfinal(dato) {
+        if (this.estaVacia()) {
             this.primero = this.ultimo = new Nodo(dato)
         }
-        else{
+        else {
             let auxiliar = this.ultimo
             this.ultimo = auxiliar.siguiente = new Nodo(dato)
             this.ultimo.anterior = auxiliar
@@ -84,89 +84,125 @@ export class listaCircularDoble{
         this.unirNodos()
     }
 
-    eliminarAlinicio(){
-        if (this.estaVacia()){
+    eliminarAlinicio() {
+        if (this.estaVacia()) {
             console.log("No se encontraron elementos")
         }
-        else if(this.primero === this.ultimo){
+        else if (this.primero === this.ultimo) {
             this.primero = this.ultimo = null
         }
-        else{
+        else {
             this.primero = this.primero.siguiente
         }
         this.unirNodos()
     }
 
-    eliminarAlfinal(){
-        if (this.estaVacia()){
+    eliminarAlfinal() {
+        if (this.estaVacia()) {
             console.log("No se encontraron datos")
         }
-        else if (this.primero === this.ultimo){
+        else if (this.primero === this.ultimo) {
             this.primero = this.ultimo = null
         }
-        else{
+        else {
             this.ultimo = this.ultimo.anterior
         }
         this.unirNodos()
     }
 
-    buscar(_dato){
+    buscar(_dato) {
         let auxiliar = this.primero
-        while (auxiliar){
-            if (auxiliar.dato.nombreCancion === _dato){
+        while (auxiliar) {
+            if (auxiliar.dato.nombreCancion === _dato) {
                 return auxiliar.dato + ", dato encontrado."
             }
-            else{
+            else {
                 auxiliar = auxiliar.siguiente
                 if (auxiliar === this.primero)
-                return _dato + ", dato no encontrado"
+                    return _dato + ", dato no encontrado"
             }
         }
     }
 
-    recorrerIniocio_Fin(){
+    recorrerIniocio_Fin() {
         let auxiliar = this.primero
-        while (auxiliar){
+        while (auxiliar) {
             console.log(auxiliar.dato.toString())
             auxiliar = auxiliar.siguiente
-            if (auxiliar === this.primero){
+            if (auxiliar === this.primero) {
                 break
             }
         }
     }
 
-    recorrerFin_Inicio(){
+    recorrerFin_Inicio() {
         let auxiliar = this.ultimo
-        while (auxiliar){
+        while (auxiliar) {
             console.log(auxiliar.dato.toString())
             auxiliar = auxiliar.anterior
-            if (auxiliar === this.ultimo){
+            if (auxiliar === this.ultimo) {
                 break
             }
         }
     }
 
-    ordenamientoBurbuja(){
-        let auxiliar 
+    ordenamientoBurbuja() {
+        let auxiliar
         let actual = auxiliar = null
-        if (!this.estaVacia()){
+        if (!this.estaVacia()) {
             actual = this.primero
-            while (actual.siguiente !== this.primero){
+            while (actual.siguiente !== this.primero) {
                 auxiliar = actual.siguiente
-                while (auxiliar !== this.primero){
-                    if (auxiliar.dato.tiempoCancion < actual.dato.tiempoCancion){
+                while (auxiliar !== this.primero) {
+                    if (auxiliar.dato.tiempoCancion < actual.dato.tiempoCancion) {
                         let temporal = actual.dato
                         actual.dato = auxiliar.dato
-                        auxiliar.dato =  temporal
+                        auxiliar.dato = temporal
                     }
                     auxiliar = auxiliar.siguiente
                 }
                 actual = actual.siguiente
             }
         }
-        else{
+        else {
             console.log("No se encontraron datos")
         }
+    }
+
+    graficarDobleDot() {
+        const MAXVALUE = 1;
+        let aux = this.primero,
+            cont = 0,
+            cont_aux = 0,
+            cadena = "";
+        cadena += "digraph G { \n";
+        cadena += "rankdir=LR \n";
+
+        while (aux) {
+            cadena += "Node" + String(cont) + '[label="' + aux.dato.tiempoCancion + '"];\n';
+            cont += 1;
+            aux = aux.siguiente;
+            if (aux === this.primero) {
+                cont_aux += 1;
+                if (cont_aux === MAXVALUE) break;
+            }
+        }
+        cont = cont_aux = 0
+        while (aux) {
+            cadena += "Node" + String(cont) + " -> " + "Node" + String(cont + 1) + ";\n";
+            cadena += "Node" + String(cont + 1) + " -> " + "Node" + String(cont) + ";\n";
+            cont += 1;
+            aux = aux.siguiente;
+            if (aux === this.ultimo) {
+                cont_aux += 1;
+                if (cont_aux === MAXVALUE) break;
+            }
+        }
+        cadena += "Node" + String(cont) + " -> " + "Node" + String(0) + ";\n"
+        cadena += "Node" + String(0) + " -> " + "Node" + String(cont) + ";\n"
+        cadena += "}";
+        console.log(cadena);
+        d3.select("#lienzo").graphviz().width(1350).height(500).renderDot(cadena);
     }
 }
 
@@ -196,6 +232,7 @@ listaCanciones.agregarAlfinal(new Canciones("Instant crush", "Contemporanea", 5)
 console.log(listaCanciones.buscar("Starboy"))
 listaCanciones.ordenamientoBurbuja()
 listaCanciones.recorrerIniocio_Fin()
+listaCanciones.graficarDobleDot()
 
 //console.log(listaCanciones.primero.anterior.dato)
 //console.log(listaCanciones.ultimo.siguiente.dato) 

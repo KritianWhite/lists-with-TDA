@@ -1,86 +1,41 @@
-var matriz;
+class NodoInterno {
 
-class NodoCelda {
-    constructor(x, y, caracter) {
+    constructor(x = null, y = null, caracter = null) {
         this.caracter = caracter;
-        this.coordenadaX = x;
-        this.coordenadaY = y;
+        this.x = x;
+        this.y = y;
         this.arriba = null;
         this.abajo = null;
         this.derecha = null;
         this.izquierda = null;
     }
 
-    setArriba(arriba) {
-        this.arriba = arriba;
-    }
-
-    getArriba() {
-        return this.arriba;
-    }
-
-    setAbajo(abajo) {
-        this.abajo = abajo;
-    }
-
-    getAbajo() {
-        return this.abajo;
-    }
-
-    setDerecha(derecha) {
-        this.derecha = derecha;
-    }
-
-    getDerecha() {
-        return this.derecha;
-    }
-
-    setIzquierda(izquierda) {
-        this.izquierda = izquierda;
-    }
-
-    getIzquierda() {
-        return this.izquierda;
-    }
-
 }
 
-class NodoCabecera {
-    constructor(id) {
+
+class NodoEncabezado {
+    constructor(id = null) {
         this.id = id;
         this.siguiente = null;
         this.anterior = null;
         this.acceso = null;
     }
 
-    getAcceso() {
-        return this.acceso;
-    }
-
-    setAcceso(nuevo_acceso) {
-        this.acceso = nuevo_acceso;
-    }
-
 }
 
-class ListaCabecera {
-    constructor(tipo) {
+
+
+class ListaEncabezado {
+
+    constructor(tipo = null) {
+        this.tipo = tipo;
         this.primero = null;
         this.ultimo = null;
-        this.tipo = tipo;
         this.size = 0;
     }
 
-    getHead() {
-        return this.primero;
-    }
-
-    isEmpty() {
-        return this.primero === null;
-    }
-
-    insertar_nodoCabecera(nuevo) {
-        var tmp;
+    insertarEncabezado(nuevo) {
+        var aux;
         this.size += 1;
 
         if (this.primero === null) {
@@ -97,18 +52,18 @@ class ListaCabecera {
                     nuevo.anterior = this.ultimo;
                     this.ultimo = nuevo;
                 } else {
-                    tmp = this.primero;
+                    aux = this.primero;
 
-                    while (tmp !== null) {
-                        if (nuevo.id < tmp.id) {
-                            nuevo.siguiente = tmp;
-                            nuevo.anterior = tmp.anterior;
-                            tmp.anterior.siguiente = nuevo;
-                            tmp.anterior = nuevo;
+                    while (aux !== null) {
+                        if (nuevo.id < aux.id) {
+                            nuevo.siguiente = aux;
+                            nuevo.anterior = aux.anterior;
+                            aux.anterior.siguiente = nuevo;
+                            aux.anterior = nuevo;
                             break;
                         } else {
-                            if (nuevo.id > tmp.id) {
-                                tmp = tmp.siguiente;
+                            if (nuevo.id > aux.id) {
+                                aux = aux.siguiente;
                             } else {
                                 break;
                             }
@@ -119,26 +74,26 @@ class ListaCabecera {
         }
     }
 
-    mostrarCabeceras() {
-        var tmp;
-        tmp = this.primero;
+    mostrarEncabezado() {
+        var aux;
+        aux = this.primero;
 
-        while (tmp !== null) {
-            console.log("Cabecera", this.tipo, tmp.id);
-            tmp = tmp.siguiente;
+        while (aux !== null) {
+            console.log("Encabezado ", this.tipo, aux.id);
+            aux = aux.siguiente;
         }
     }
 
-    getCabecera(id) {
-        var tmp;
-        tmp = this.primero;
+    getEncabezado(id) {
+        var aux;
+        aux = this.primero;
 
-        while (tmp !== null) {
-            if (id === tmp.id) {
-                return tmp;
+        while (aux !== null) {
+            if (id === aux.id) {
+                return aux;
             }
 
-            tmp = tmp.siguiente;
+            aux = aux.siguiente;
         }
 
         return null;
@@ -146,205 +101,323 @@ class ListaCabecera {
 
 }
 
+
 class MatrizDispersa {
-    constructor() {
-        this.filas = new ListaCabecera("fila");
-        this.columnas = new ListaCabecera("columna");
+
+    constructor(capa = null) {
+        this.capa = capa;
+        this.filas = new ListaEncabezado("LISTAS");
+        this.columnas = new ListaEncabezado("COLUMNAS");
+
     }
 
-    insertar(pos_x, pos_y, caracter) {
-        var nodo_X, nodo_Y, nueva_celda, tmp, tmp2;
-        nueva_celda = new NodoCelda(pos_x, pos_y, caracter);
-        nodo_X = this.filas.getCabecera(pos_x);
-        nodo_Y = this.columnas.getCabecera(pos_y);
+    insertar(nodoInterno) {
+        var aux, aux2, encabezadoX, encabezadoY;
+        encabezadoX = this.filas.getEncabezado(nodoInterno.x);
+        encabezadoY = this.columnas.getEncabezado(nodoInterno.y);
 
-        if (nodo_X === null) {
-            nodo_X = new NodoCabecera(pos_x);
-            this.filas.insertar_nodoCabecera(nodo_X);
+        if (encabezadoX === null) {
+            encabezadoX = new NodoEncabezado(nodoInterno.x);
+            this.filas.insertarEncabezado(encabezadoX);
         }
 
-        if (nodo_Y === null) {
-            nodo_Y = new NodoCabecera(pos_y);
-            this.columnas.insertar_nodoCabecera(nodo_Y);
+        if (encabezadoY === null) {
+            encabezadoY = new NodoEncabezado(nodoInterno.y);
+            this.columnas.insertarEncabezado(encabezadoY);
         }
 
-        if (nodo_X.getAcceso() === null) {
-            nodo_X.setAcceso(nueva_celda);
+        if (encabezadoX.acceso === null) {
+            encabezadoX.acceso = nodoInterno;
         } else {
-            if (nueva_celda.coordenadaY < nodo_X.getAcceso().coordenadaY) {
-                nueva_celda.setDerecha(nodo_X.getAcceso());
-                nodo_X.getAcceso().setIzquierda(nueva_celda);
-                nodo_X.setAcceso(nueva_celda);
+            if (nodoInterno.y < encabezadoX.acceso.y) {
+                nodoInterno.derecha = encabezadoX.acceso;
+                encabezadoX.acceso.izquierda = nodoInterno;
+                encabezadoX.acceso = nodoInterno;
             } else {
-                tmp = nodo_X.getAcceso();
-
-                while (tmp !== null) {
-                    if (nueva_celda.coordenadaY < tmp.coordenadaY) {
-                        nueva_celda.setDerecha(tmp);
-                        nueva_celda.setIzquierda(tmp.getIzquierda());
-                        tmp.getIzquierda().setDerecha(nueva_celda);
-                        tmp.setIzquierda(nueva_celda);
-                        break;
-                    } else {
-                        if (nueva_celda.coordenadaX === tmp.coordenadaX && nueva_celda.coordenadaY === tmp.coordenadaY) {
-                            break;
-                        } else {
-                            if (tmp.getDerecha() === null) {
-                                tmp.setDerecha(nueva_celda);
-                                nueva_celda.setIzquierda(tmp);
-                                break;
-                            } else {
-                                tmp = tmp.getDerecha();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (nodo_Y.getAcceso() === null) {
-            nodo_Y.setAcceso(nueva_celda);
-        } else {
-            if (nueva_celda.coordenadaX < nodo_Y.getAcceso().coordenadaX) {
-                nueva_celda.setAbajo(nodo_Y.getAcceso());
-                nodo_Y.getAcceso().setArriba(nueva_celda);
-                nodo_Y.setAcceso(nueva_celda);
-            } else {
-                tmp2 = nodo_Y.getAcceso();
-
-                while (tmp2 !== null) {
-                    if (nueva_celda.coordenadaX < tmp2.coordenadaX) {
-                        nueva_celda.setAbajo(tmp2);
-                        nueva_celda.setArriba(tmp2.getArriba());
-                        tmp2.getArriba().setAbajo(nueva_celda);
-                        tmp2.setArriba(nueva_celda);
-                        break;
-                    } else {
-                        if (nueva_celda.coordenadaX === tmp2.coordenadaX && nueva_celda.coordenadaY === tmp2.coordenadaY) {
-                            break;
-                        } else {
-                            if (tmp2.getAbajo() === null) {
-                                tmp2.setAbajo(nueva_celda);
-                                nueva_celda.setArriba(tmp2);
-                                break;
-                            } else {
-                                tmp2 = tmp2.getAbajo();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    recorridoPorFila(fila) {
-        var inicio, tmp;
-        inicio = this.filas.getCabecera(fila);
-
-        if (inicio === null) {
-            console.log("Esa coordenada de filas no existe");
-            return;
-        }
-
-        tmp = inicio.getAcceso();
-        console.log(`Fila : ${fila}`);
-        console.log();
-
-        while (tmp !== null) {
-            console.log(tmp.caracter);
-            tmp = tmp.getDerecha();
-        }
-
-        console.log("");
-    }
-
-    recorridoPorColumna(columna) {
-        var inicio, tmp;
-        inicio = this.columnas.getCabecera(columna);
-
-        if (inicio === null) {
-            console.log("Esa coordenada de columna no existe");
-            return;
-        }
-
-        tmp = inicio.getAcceso();
-
-        while (tmp !== null) {
-            console.log(tmp.caracter);
-            tmp = tmp.getAbajo();
-        }
-    }
-
-    ubicarCoordenada(fila, columna) {
-        var tmp;
-
-        try {
-            tmp = this.filas.getCabecera(fila).getAcceso();
-
-            while (tmp !== null) {
-                if (tmp.coordenadaX === fila && tmp.coordenadaY === columna) {
-                    return tmp;
-                }
-
-                tmp = tmp.getDerecha();
-            }
-
-            return null;
-        } catch (e) {
-            console.log("Coordenada no encontrada");
-            return null;
-        }
-    }
-
-    printMatrixO() {
-        var aux, inicio, tmp;
-        aux = tmp = null;
-        inicio = this.filas.getHead();
-
-        if (inicio !== null) {
-            tmp = inicio.getAcceso();
-
-            while (tmp !== null) {
-                aux = tmp;
+                aux = encabezadoX.acceso;
 
                 while (aux !== null) {
-                    console.log(aux.caracter + " ");
-                    aux = aux.getDerecha();
+                    if (nodoInterno.y < aux.y) {
+                        nodoInterno.derecha = aux;
+                        nodoInterno.izquierda = aux.izquierda;
+                        aux.izquierda.derecha = nodoInterno;
+                        aux.izquierda = nodoInterno;
+                        break;
+                    } else {
+                        if (aux.derecha === null) {
+                            aux.derecha = nodoInterno;
+                            nodoInterno.izquierda = aux;
+                            break;
+                        } else {
+                            aux = aux.derecha;
+                        }
+                    }
                 }
-
-                console.log("");
-                tmp = tmp.getAbajo();
             }
+        }
+
+        if (encabezadoY.acceso === null) {
+            encabezadoY.acceso = nodoInterno;
         } else {
-            return console.log("Matriz Vacia");
+            if (nodoInterno.x < encabezadoY.acceso.x) {
+                nodoInterno.abajo = encabezadoY.acceso;
+                encabezadoY.acceso.arriba = nodoInterno;
+                encabezadoY.acceso = nodoInterno;
+            } else {
+                aux2 = encabezadoY.acceso;
+
+                while (aux2 !== null) {
+                    if (nodoInterno.x < aux2.x) {
+                        nodoInterno.abajo = aux2;
+                        nodoInterno.arriba = aux2.arriba;
+                        aux2.arriba.abajo = nodoInterno;
+                        aux2.arriba = nodoInterno;
+                        break;
+                    } else {
+                        if (aux2.abajo === null) {
+                            aux2.abajo = nodoInterno;
+                            nodoInterno.arriba = aux2;
+                            break;
+                        } else {
+                            aux2 = aux2.abajo;
+                        }
+                    }
+                }
+            }
         }
     }
 
+    print_matriz() {
+        var aux, aux2, cont;
+        aux = this.filas.primero;
+        aux2 = aux.acceso;
+        cont = 0;
+
+        while (aux !== null) {
+            cont += 1;
+
+            while (aux2 !== null) {
+                console.log(aux2.x, aux2.y, aux2.caracter);
+                aux2 = aux2.derecha;
+            }
+
+            aux = aux.siguiente;
+
+            if (aux !== null) {
+                aux2 = aux.acceso;
+            }
+        }
+
+        aux = this.filas.primero;
+        aux2 = aux.acceso;
+        cont = 0;
+    }
+
+    print_matriz2() {
+        var Matriz2, MatrizAux, aux, aux2, cont;
+        aux = this.filas.primero;
+        aux2 = aux.acceso;
+        Matriz2 = [];
+        cont = 0;
+
+        while (aux !== null) {
+            MatrizAux = [];
+            cont += 1;
+
+            while (aux2 !== null) {
+                MatrizAux.append(aux2.caracter);
+                aux2 = aux2.derecha;
+            }
+
+            aux = aux.siguiente;
+            Matriz2.append(MatrizAux);
+
+            if (aux !== null) {
+                aux2 = aux.acceso;
+            }
+        }
+
+        aux = this.filas.primero;
+        aux2 = aux.acceso;
+        cont = 0;
+        return Matriz2;
+    }
+
+    graficarDot() {
+        var aux, aux2, cont, grafo, group, rank, x_fila, y_columna;
+
+        grafo = "digraph T{ \nnode[shape=box fontname=\"Arial\" fillcolor=\"white\" style=filled ]";
+        grafo += "\nroot[label = \"capa: " + this.capa + "\", group=1]\n";
+        grafo += "label = \"Matriz Dispersa\" \nfontname=\"Arial Black\" \nfontsize=\"15pt\" \n\n\n";
+
+        x_fila = this.filas.primero;
+        while (x_fila != null) {
+            grafo += `F${x_fila.id}[label="${x_fila.id}",fillcolor="plum",group=1];\n`;
+            x_fila = x_fila.siguiente;
+        }
+
+        x_fila = this.filas.primero;
+        while (x_fila != null) {
+            if (x_fila.siguiente !== null) {
+                grafo += `F${x_fila.id}->F${x_fila.siguiente.id};\n`;
+                grafo += `F${x_fila.siguiente.id}->F${x_fila.id};\n`;
+            }
+
+            x_fila = x_fila.siguiente;
+        }
+
+        y_columna = this.columnas.primero;
+
+        while (y_columna != null) {
+            group = Number.parseInt(y_columna.id) + 1;
+            grafo += `C${y_columna.id}[label="C${y_columna.id}",fillcolor="powderblue",group=${group.toString()}];\n`;
+            y_columna = y_columna.siguiente;
+        }
+
+        cont = 0;
+        y_columna = this.columnas.primero;
+
+        while (y_columna != null) {
+            if (y_columna.siguiente !== null) {
+                grafo += `C${y_columna.id}->C${y_columna.siguiente.id}\n`;
+                grafo += `C${y_columna.siguiente.id}->C${y_columna.id}\n`;
+            }
+
+            cont += 1;
+            y_columna = y_columna.siguiente;
+        }
+
+        y_columna = this.columnas.primero;
+        x_fila = this.filas.primero;
+        grafo += `root->F${x_fila.id};\n root->C${y_columna.id};\n`;
+        grafo += "{rank=same;root;";
+        cont = 0;
+        y_columna = this.columnas.primero;
+
+        while (y_columna != null) {
+            grafo += `C${y_columna.id};`;
+            cont += 1;
+            y_columna = y_columna.siguiente;
+        }
+
+        grafo += "}\n";
+        aux = this.filas.primero;
+        aux2 = aux.acceso;
+        cont = 0;
+
+        while (aux != null) {
+            cont += 1;
+
+            while (aux2 != null) {
+                grafo += `N${aux2.x}_${aux2.y}[label="${aux2.caracter}",group="${Number.parseInt(aux2.y) + 1}", fillcolor="white"];\n`;
+                aux2 = aux2.derecha;
+            }
+
+            aux = aux.siguiente;
+
+            if (aux != null) {
+                aux2 = aux.acceso;
+            }
+        }
+
+        aux = this.filas.primero;
+        aux2 = aux.acceso;
+        cont = 0;
+
+        while (aux != null) {
+            rank = "{" + `rank = same;F${aux.id};`;
+            cont = 0;
+
+            while (aux2 != null) {
+                if (cont == 0) {
+                    grafo += `F${aux.id}->N${aux2.x}_${aux2.y};\n`;
+                    grafo += `N${aux2.x}_${aux2.y}->F${aux.id};\n`;
+                    cont += 1;
+                }
+
+                if (aux2.derecha != null) {
+                    grafo += `N${aux2.x}_${aux2.y}->N${aux2.derecha.x}_${aux2.derecha.y};\n`;
+                    grafo += `N${aux2.derecha.x}_${aux2.derecha.y}->N${aux2.x}_${aux2.y};\n`;
+                }
+
+                rank += `N${aux2.x}_${aux2.y};`;
+                aux2 = aux2.derecha;
+            }
+
+            aux = aux.siguiente;
+
+            if (aux != null) {
+                aux2 = aux.acceso;
+            }
+
+            grafo += rank + "}\n";
+        }
+
+        aux = this.columnas.primero;
+        aux2 = aux.acceso;
+        cont = 0;
+
+        while (aux != null) {
+            cont = 0;
+            grafo += "";
+
+            while (aux2 != null) {
+                if (cont == 0) {
+                    grafo += `C${aux.id}->N${aux2.x}_${aux2.y};\n`;
+                    grafo += `N${aux2.x}_${aux2.y}->C${aux.id};\n`;
+                    cont += 1;
+                }
+
+                if (aux2.abajo != null) {
+                    grafo += `N${aux2.abajo.x}_${aux2.abajo.y}->N${aux2.x}_${aux2.y};\n`;
+                    grafo += `N${aux2.x}_${aux2.y}->N${aux2.abajo.x}_${aux2.abajo.y};\n`;
+                }
+
+                aux2 = aux2.abajo;
+            }
+
+            aux = aux.siguiente;
+
+            if (aux != null) {
+                aux2 = aux.acceso;
+            }
+        }
+        grafo += "}";
+
+        d3.select("#lienzo").graphviz()
+            .width(1000)
+            .height(700)
+            .renderDot(grafo)
+
+    }
 
 }
 
-matriz = new MatrizDispersa();
-matriz.insertar(1, 1, "h");
-matriz.insertar(1, 2, "*");
-matriz.insertar(1, 3, "*");
-matriz.insertar(1, 4, "*");
-matriz.insertar(2, 1, "*");
-matriz.insertar(2, 2, "o");
-matriz.insertar(2, 3, "*");
-matriz.insertar(2, 4, "*");
-matriz.insertar(3, 1, "*");
-matriz.insertar(3, 2, "*");
-matriz.insertar(3, 3, "l");
-matriz.insertar(3, 4, "*");
-matriz.insertar(4, 1, "*");
-matriz.insertar(4, 2, "*");
-matriz.insertar(4, 3, "*");
-matriz.insertar(4, 4, "a");
-matriz.insertar(4, 5, "*");
-matriz.insertar(4, 6, "*");
-matriz.insertar(15, 1, "*");
-matriz.insertar(15, 2, "*");
-matriz.insertar(15, 3, "*");
-matriz.insertar(15, 4, "*");
-matriz.insertar(15, 5, "*");
-matriz.printMatrixO();
+
+let matriz = new MatrizDispersa("");
+
+matriz.insertar(new NodoInterno(1, 1, "h"));
+matriz.insertar(new NodoInterno(1, 2, "*"));
+matriz.insertar(new NodoInterno(1, 3, "*"));
+matriz.insertar(new NodoInterno(1, 4, "*"));
+matriz.insertar(new NodoInterno(2, 1, "*"));
+matriz.insertar(new NodoInterno(2, 2, "o"));
+matriz.insertar(new NodoInterno(2, 3, "*"));
+matriz.insertar(new NodoInterno(2, 4, "*"));
+matriz.insertar(new NodoInterno(3, 1, "*"));
+matriz.insertar(new NodoInterno(3, 2, "*"));
+matriz.insertar(new NodoInterno(3, 3, "l"));
+matriz.insertar(new NodoInterno(3, 4, "*"));
+matriz.insertar(new NodoInterno(4, 1, "*"));
+matriz.insertar(new NodoInterno(4, 2, "*"));
+matriz.insertar(new NodoInterno(4, 3, "*"));
+matriz.insertar(new NodoInterno(4, 4, "a"));
+matriz.insertar(new NodoInterno(4, 5, "*"));
+matriz.insertar(new NodoInterno(4, 6, "*"));
+matriz.insertar(new NodoInterno(5, 1, "*"));
+matriz.insertar(new NodoInterno(5, 2, "*"));
+matriz.insertar(new NodoInterno(5, 3, "*"));
+matriz.insertar(new NodoInterno(5, 4, "*"));
+matriz.insertar(new NodoInterno(5, 5, "*"));
+
+matriz.graficarDot();
