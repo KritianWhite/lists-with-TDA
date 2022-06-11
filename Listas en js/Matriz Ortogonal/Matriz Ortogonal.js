@@ -1,3 +1,4 @@
+alert("Hola bb")
 var Matriz, columna, fila;
 
 class NodoOrtogonal {
@@ -177,10 +178,193 @@ class MatrizOrtogonal {
     }
   }
 
+
+  drawMatrix() {
+    var aux, contenido, file, tmp;
+    tmp = null;
+    aux = null;
+
+    if (this.head !== null) {
+      contenido = "";
+      contenido += "\ndigraph html {\nabc [shape = none, margin = 0, label=<\n<TABLE BORDER = \"1\" CELLBORDER = \"1\" CELLSPACING=\"0\" CELLPADDING=\"10\">\n";
+      tmp = this.head;
+
+      while (tmp !== null) {
+        aux = tmp;
+        contenido += "<TR>";
+
+        while (aux !== null) {
+          contenido += `<TD BGCOLOR="#ffffff">${aux.caracter}</TD>`;
+          aux = aux.siguiente;
+        }
+
+        contenido += "</TR>";
+        tmp = tmp.abajo;
+      }
+
+      contenido += "</TABLE>>];\n}";
+      d3.select("#lienzo").graphviz()
+        .width(1000)
+        .height(700)
+        .renderDot(contenido)
+
+    } else {
+      return console.log("Error al tratar de dibujar la matriz");
+    }
+  }
+
+  /*graficarDot() {
+    var aux, aux2, cont, grafo, group, rank, x_fila, y_columna;
+
+    grafo = "digraph T{ \nnode[shape=box fontname=\"Arial\" fillcolor=\"white\" style=filled ]";
+    grafo += "\nroot[label = \"capa: " + this.capa + "\", group=1]\n";
+    grafo += "label = \"Matriz Dispersa\" \nfontname=\"Arial Black\" \nfontsize=\"15pt\" \n\n\n";
+
+    x_fila = this.filas.primero;
+    while (x_fila != null) {
+        grafo += `F${x_fila.id}[label="${x_fila.id}",fillcolor="plum",group=1];\n`;
+        x_fila = x_fila.siguiente;
+    }
+
+    x_fila = this.filas.primero;
+    while (x_fila != null) {
+        if (x_fila.siguiente !== null) {
+            grafo += `F${x_fila.id}->F${x_fila.siguiente.id};\n`;
+            grafo += `F${x_fila.siguiente.id}->F${x_fila.id};\n`;
+        }
+
+        x_fila = x_fila.siguiente;
+    }
+
+    y_columna = this.columnas.primero;
+
+    while (y_columna != null) {
+        group = Number.parseInt(y_columna.id) + 1;
+        grafo += `C${y_columna.id}[label="C${y_columna.id}",fillcolor="powderblue",group=${group.toString()}];\n`;
+        y_columna = y_columna.siguiente;
+    }
+
+    cont = 0;
+    y_columna = this.columnas.primero;
+
+    while (y_columna != null) {
+        if (y_columna.siguiente !== null) {
+            grafo += `C${y_columna.id}->C${y_columna.siguiente.id}\n`;
+            grafo += `C${y_columna.siguiente.id}->C${y_columna.id}\n`;
+        }
+
+        cont += 1;
+        y_columna = y_columna.siguiente;
+    }
+
+    y_columna = this.columnas.primero;
+    x_fila = this.filas.primero;
+    grafo += `root->F${x_fila.id};\n root->C${y_columna.id};\n`;
+    grafo += "{rank=same;root;";
+    cont = 0;
+    y_columna = this.columnas.primero;
+
+    while (y_columna != null) {
+        grafo += `C${y_columna.id};`;
+        cont += 1;
+        y_columna = y_columna.siguiente;
+    }
+
+    grafo += "}\n";
+    aux = this.filas.primero;
+    aux2 = aux.acceso;
+    cont = 0;
+
+    while (aux != null) {
+        cont += 1;
+
+        while (aux2 != null) {
+            grafo += `N${aux2.x}_${aux2.y}[label="${aux2.caracter}",group="${Number.parseInt(aux2.y) + 1}", fillcolor="white"];\n`;
+            aux2 = aux2.derecha;
+        }
+
+        aux = aux.siguiente;
+
+        if (aux != null) {
+            aux2 = aux.acceso;
+        }
+    }
+
+    aux = this.filas.primero;
+    aux2 = aux.acceso;
+    cont = 0;
+
+    while (aux != null) {
+        rank = "{" + `rank = same;F${aux.id};`;
+        cont = 0;
+
+        while (aux2 != null) {
+            if (cont == 0) {
+                grafo += `F${aux.id}->N${aux2.x}_${aux2.y};\n`;
+                grafo += `N${aux2.x}_${aux2.y}->F${aux.id};\n`;
+                cont += 1;
+            }
+
+            if (aux2.derecha != null) {
+                grafo += `N${aux2.x}_${aux2.y}->N${aux2.derecha.x}_${aux2.derecha.y};\n`;
+                grafo += `N${aux2.derecha.x}_${aux2.derecha.y}->N${aux2.x}_${aux2.y};\n`;
+            }
+
+            rank += `N${aux2.x}_${aux2.y};`;
+            aux2 = aux2.derecha;
+        }
+
+        aux = aux.siguiente;
+
+        if (aux != null) {
+            aux2 = aux.acceso;
+        }
+
+        grafo += rank + "}\n";
+    }
+
+    aux = this.columnas.primero;
+    aux2 = aux.acceso;
+    cont = 0;
+
+    while (aux != null) {
+        cont = 0;
+        grafo += "";
+
+        while (aux2 != null) {
+            if (cont == 0) {
+                grafo += `C${aux.id}->N${aux2.x}_${aux2.y};\n`;
+                grafo += `N${aux2.x}_${aux2.y}->C${aux.id};\n`;
+                cont += 1;
+            }
+
+            if (aux2.abajo != null) {
+                grafo += `N${aux2.abajo.x}_${aux2.abajo.y}->N${aux2.x}_${aux2.y};\n`;
+                grafo += `N${aux2.x}_${aux2.y}->N${aux2.abajo.x}_${aux2.abajo.y};\n`;
+            }
+
+            aux2 = aux2.abajo;
+        }
+
+        aux = aux.siguiente;
+
+        if (aux != null) {
+            aux2 = aux.acceso;
+        }
+    }
+    grafo += "}";
+
+    d3.select("#lienzo").graphviz()
+        .width(1000)
+        .height(700)
+        .renderDot(grafo)*/
+
 }
+
 
 fila = 6;
 columna = 9;
 Matriz = new MatrizOrtogonal();
-Matriz.autofilling(fila, columna, "*");
-Matriz.printMatrixO();
+Matriz.autofilling(fila, columna, "holaaaa jejejeje");
+//Matriz.printMatrixO();
+Matriz.drawMatrix()

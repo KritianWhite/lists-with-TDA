@@ -1,65 +1,66 @@
 // NOTA: Solo no ordena por album
+//alert("hola bb")
 
-class Canciones{
-    constructor(nombreSong, tiempoSong, artistaSong, albumSong){
+class Canciones {
+    constructor(nombreSong, tiempoSong, artistaSong, albumSong) {
         this._nombreSong = nombreSong
         this._tiempoSong = tiempoSong
         this._artistaSong = artistaSong
         this._albumSong = albumSong
     }
-    get nombreSong(){
+    get nombreSong() {
         return this._nombreSong
     }
-    set nombreSong(nombreSong){
+    set nombreSong(nombreSong) {
         this._nombreSong = nombreSong
     }
-    get tiempoSong(){
+    get tiempoSong() {
         return parseInt(this._tiempoSong)
     }
-    set tiempoSong(tiempoSong){
+    set tiempoSong(tiempoSong) {
         this._tiempoSong = tiempoSong
     }
-    get artistaSong(){
+    get artistaSong() {
         return this._artistaSong
     }
-    set artistaSong(artistaSong){
+    set artistaSong(artistaSong) {
         this._artistaSong = artistaSong
     }
-    get albumSong(){
+    get albumSong() {
         return this._artistaSong
     }
-    set albumSong(albumSong){
+    set albumSong(albumSong) {
         this._albumSong = albumSong
     }
 
-    toString(){
+    toString() {
         return `Album: ${this._albumSong}, Cancion: ${this._nombreSong}, Artista: ${this._artistaSong}, Tiempo: ${this._tiempoSong}`
     }
 }
 
-class Nodo{
-    constructor(dato){
+class Nodo {
+    constructor(dato) {
         this.dato = dato
         this.siguiente = null
     }
 }
 
-class listaCircularSimple{
-    constructor(){
+class listaCircularSimple {
+    constructor() {
         this.primero = null
         this.ultimo = null
     }
 
-    estaVacia(){
+    estaVacia() {
         return this.primero === null
     }
 
-    agregarAlinicio(dato){
-        if (this.estaVacia()){
+    agregarAlinicio(dato) {
+        if (this.estaVacia()) {
             this.primero = this.ultimo = new Nodo(dato)
             this.ultimo.siguiente = this.primero
         }
-        else{
+        else {
             let auxiliar = new Nodo(dato)
             auxiliar.siguiente = this.primero
             this.primero = auxiliar
@@ -67,41 +68,41 @@ class listaCircularSimple{
         }
     }
 
-    agregarAlfinal(dato){
-        if (this.estaVacia()){
+    agregarAlfinal(dato) {
+        if (this.estaVacia()) {
             this.primero = this.ultimo = new Nodo(dato)
             this.ultimo.siguiente = this.primero
         }
-        else{
+        else {
             let auxiliar = this.ultimo
             this.ultimo = auxiliar.siguiente = new Nodo(dato)
             this.ultimo.siguiente = this.primero
         }
     }
 
-    eliminarAlinicio(){
-        if (this.estaVacia()){
+    eliminarAlinicio() {
+        if (this.estaVacia()) {
             console.log("No se encontraron datos en la lista")
         }
-        else if (this.primero === this.ultimo){
+        else if (this.primero === this.ultimo) {
             this.primero = this.ultimo = null
         }
-        else{
+        else {
             this.primero = this.primero.siguiente
             this.ultimo.siguiente = this.primero
         }
     }
 
-    eliminarAlfinal(){
-        if (this.estaVacia()){
+    eliminarAlfinal() {
+        if (this.estaVacia()) {
             console.log("No se encontraron datos")
         }
-        else if (this.primero = this.ultimo){
+        else if (this.primero = this.ultimo) {
             this.primero = this.ultimo = null
         }
-        else{
+        else {
             let auxiliar = this.primero
-            while (auxiliar.siguiente != this.ultimo){
+            while (auxiliar.siguiente != this.ultimo) {
                 auxiliar = auxiliar.siguiente
             }
             auxiliar.siguiente = this.primero
@@ -109,61 +110,61 @@ class listaCircularSimple{
         }
     }
 
-    recorrerLista(){
-        if (this.estaVacia()){
+    recorrerLista() {
+        if (this.estaVacia()) {
             console.log("No se encontraron datos")
         }
         let auxiliar = this.primero
-        while (auxiliar!=null){
+        while (auxiliar != null) {
             console.log(auxiliar.dato.toString())
             auxiliar = auxiliar.siguiente
-            if (auxiliar === this.primero){
+            if (auxiliar === this.primero) {
                 break
             }
         }
         console.log("\n")
     }
 
-    buscarDato(dato_){
-        if (this.estaVacia()){
+    buscarDato(dato_) {
+        if (this.estaVacia()) {
             console.log("No se encontraron datos")
         }
         let auxiliar = this.primero
-        while (auxiliar != null){
-            if (auxiliar.dato.nombreSong === dato_){
+        while (auxiliar != null) {
+            if (auxiliar.dato.nombreSong === dato_) {
                 return ((auxiliar.dato) + ", dato encontrado.")
             }
             auxiliar = auxiliar.siguiente
-            if (auxiliar === this.primero){
+            if (auxiliar === this.primero) {
                 return ((dato_) + ", dato no encontrado.")
             }
         }
     }
 
-    tamanio(){
+    tamanio() {
         let contador = 0
-        if (this.estaVacia()){
+        if (this.estaVacia()) {
             return 0
         }
         let auxiliar = this.primero
-        while (auxiliar != null){
+        while (auxiliar != null) {
             contador += 1
             auxiliar = auxiliar.siguiente
-            if (auxiliar === this.primero){
+            if (auxiliar === this.primero) {
                 console.log(contador)
             }
         }
     }
 
-    ordenamientoBurbuja(){
+    ordenamientoBurbuja() {
         let auxiliar
         let actual = auxiliar = null
-        if (!this.estaVacia()){
+        if (!this.estaVacia()) {
             actual = this.primero
-            while (actual.siguiente !== this.primero){
+            while (actual.siguiente !== this.primero) {
                 auxiliar = actual.siguiente
-                while (auxiliar !== this.primero){
-                    if (auxiliar.dato.tiempoSong < actual.dato.tiempoSong){
+                while (auxiliar !== this.primero) {
+                    if (auxiliar.dato.tiempoSong < actual.dato.tiempoSong) {
                         let temporal = actual.dato
                         actual.dato = auxiliar.dato
                         auxiliar.dato = temporal
@@ -173,9 +174,44 @@ class listaCircularSimple{
                 actual = actual.siguiente
             }
         }
-        else{
+        else {
             console.log("No se encontraron elementos")
         }
+    }
+
+    graficarDot() {
+        const MAXVALUE = 1;
+        let aux = this.primero,
+            cont = 0,
+            cont_aux = 0,
+            cadena = "";
+        cadena += "digraph G { \n";
+        cadena += "rankdir=LR \n";
+
+        while (aux) {
+            cadena += "Node" + String(cont) + '[label="' + aux.dato.nombreSong + '"];\n';
+            cont += 1;
+            aux = aux.siguiente;
+            if (aux === this.primero) {
+                cont_aux += 1;
+                if (cont_aux === MAXVALUE) break;
+            }
+        }
+        cont = cont_aux = 0
+        while (aux) {
+            cadena += "Node" + String(cont) + " -> " + "Node" + String(cont + 1) + ";\n";
+            cont += 1;
+            aux = aux.siguiente;
+            if (aux === this.ultimo) {
+                cont_aux += 1;
+                if (cont_aux === MAXVALUE) break;
+            }
+        }
+        cadena += "Node" + String(cont) + " -> " + "Node" + String(0) + ";\n"
+        cadena += "}";
+        console.log(cadena);
+        d3.select("#lienzo").graphviz().width(1350).height(500).renderDot(cadena);
+
     }
 
 }
@@ -189,6 +225,7 @@ listaCanciones.agregarAlinicio(new Canciones("Fell me", 3, "Trueno", "Sencillo")
 listaCanciones.agregarAlinicio(new Canciones("Algo me gusta de ti", 5, "Wisin & Yandel", "Desconocido"))
 listaCanciones.agregarAlinicio(new Canciones("Hurricane", 5, "Arty", "Remix"))
 listaCanciones.agregarAlinicio(new Canciones("Ni contigo, ni sin ti", 2, "Pepe aguilar", "Esto si es cumbia"))
-console.log(listaCanciones.buscarDato("Hola"))
+//console.log(listaCanciones.buscarDato("Hola"))
 listaCanciones.ordenamientoBurbuja()
 listaCanciones.recorrerLista()
+listaCanciones.graficarDot()

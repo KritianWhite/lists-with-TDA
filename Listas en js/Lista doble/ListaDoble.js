@@ -141,7 +141,7 @@ class listaDoble{
             while (actual.siguiente){
                 auxiliar = actual.siguiente
                 while (auxiliar){
-                    if (auxiliar.dato.apellido < actual.dato.apellido){
+                    if (auxiliar.dato.nombre < actual.dato.nombre){
                         let temporal = actual.dato
                         actual.dato = auxiliar.dato
                         auxiliar.dato = temporal
@@ -155,9 +155,32 @@ class listaDoble{
             console.log("No se encontraron elementos")
         }
     }
-}
 
-console.log("Hola mundo")
+    graficarDobleDot() {
+        let temporal = this.primero
+        let cont = 0
+        let cadena = "";
+        cadena += "digraph G { \n";
+        cadena += "rankdir=LR \n";
+        
+        while (temporal !== null) {
+
+            cadena += "Node" + cont + "[label=\"" + temporal.dato.nombre+ " \n" + temporal.dato.apellido + "\"];\n";
+
+            if (temporal !== this.primero) {
+                cadena += "Node" + (cont - 1) + " -> " + "Node" + (cont) + ";\n";
+                cadena += "Node" + (cont) + " -> " + "Node" + (cont -1) + ";\n";
+            }
+
+            temporal = temporal.siguiente;
+            cont += 1;
+        }
+
+        cadena += "}";
+        console.log(cadena);
+        d3.select("#lienzo").graphviz().width(1350).height(500).renderDot(cadena);
+    }
+}
 
 let listaPersonas = new listaDoble();
 listaPersonas.agregarAlfinal(new Persona("Carlos", "Soto", 20))
@@ -166,5 +189,6 @@ listaPersonas.agregarAlinicio(new Persona("Daniel", "Barillas",15))
 listaPersonas.agregarAlinicio(new Persona("Christian", "Blanco", 21))
 listaPersonas.agregarAlinicio(new Persona("Javier", "Santos", 40))
 listaPersonas.ordenamientoBurbuja()
-listaPersonas.buscarDato("Jaime")
+//listaPersonas.buscarDato("Jaime")
 listaPersonas.recorrerLista()
+listaPersonas.graficarDobleDot()

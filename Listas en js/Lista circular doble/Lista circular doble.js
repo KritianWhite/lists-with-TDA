@@ -199,7 +199,6 @@ export class listaCircularDoble {
             }
         }
         cadena += "Node" + String(cont) + " -> " + "Node" + String(0) + ";\n"
-        cadena += "Node" + String(0) + " -> " + "Node" + String(cont) + ";\n"
         cadena += "}";
         console.log(cadena);
         d3.select("#lienzo").graphviz().width(1350).height(500).renderDot(cadena);
