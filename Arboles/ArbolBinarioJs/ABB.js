@@ -1,3 +1,6 @@
+/*
+*Este arbol ABB si funciona correctamente, revisar ABB.py
+*/
 class Nodo {
   constructor(id) {
     this.id = id;
