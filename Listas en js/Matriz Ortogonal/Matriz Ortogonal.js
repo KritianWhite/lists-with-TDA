@@ -1,4 +1,3 @@
-alert("Hola bb")
 var Matriz, columna, fila;
 
 class NodoOrtogonal {
