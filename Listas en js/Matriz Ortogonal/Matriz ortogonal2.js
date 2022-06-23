@@ -20,10 +20,10 @@ class NodoEncabezado {
         this.anterior = null;
         this.acceso = null;
     }
-    getAcceso(){
+    getAcceso() {
         return this.acceso
     }
-    setAcceso(nuevo_acceso){
+    setAcceso(nuevo_acceso) {
         this.acceso = nuevo_acceso
     }
 
@@ -104,7 +104,7 @@ class ListaEncabezado {
 
         return null;
     }
-    
+
 
 }
 
@@ -397,17 +397,17 @@ class MatrizDispersa {
             .renderDot(grafo)
 
     }
-    ubicarCoordenada(fila, columna,dato_nuevo) {
+    ubicarCoordenada(fila, columna, dato_nuevo) {
         var tmp;
-        for (let i=1; i<=25; i++){
+        for (let i = 1; i <= 25; i++) {
             tmp = this.filas.getEncabezado(i).getAcceso()
             while (tmp !== null) {
-                if (tmp.x == fila && tmp.y == columna){
+                if (tmp.x == fila && tmp.y == columna) {
                     tmp.caracter = dato_nuevo;
                 }
                 tmp = tmp.derecha;
             }
-        }  
+        }
         /*try {
           tmp = this.filas.getEncabezado(fila).getAcceso();
     
@@ -436,21 +436,26 @@ class MatrizDispersa {
           console.log("Coordenada no encontrada");
           return null;
         }*/
-      }
+    }
+
+    llenarMatriz() {
+        for (let i = 1; i <= 25; i++) {
+            for (let j = 1; j <= 25; j++) {
+                matriz.insertar(new NodoInterno(i, j, " "));
+            }
+        }
+    }
+
 
 }
+
 
 
 let matriz = new MatrizDispersa("");
-
-for(let i = 1; i<=25;i++){
-    for(let j = 1; j<= 25;j++){
-        matriz.insertar(new NodoInterno(i, j, " "));
-    }
-}
-matriz.ubicarCoordenada(1, 1,"h")
-matriz.ubicarCoordenada(5, 2,"jsjs")
-matriz.ubicarCoordenada(4, 2,"j")
+matriz.llenarMatriz()
+matriz.ubicarCoordenada(1, 2, "Zounds")
+matriz.ubicarCoordenada(9, 1, "Isosure")
+matriz.ubicarCoordenada(8, 20, "Crustatia")
 
 
 matriz.graficarDot();

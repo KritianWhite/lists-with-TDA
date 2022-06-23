@@ -137,76 +137,62 @@ class Lista_Listas {
   graficar() {
     var cadena, cont, cont2, horizontal, vertical;
     cadena = "";
-    cadena += "digraph G { \n";
+    cadena = cadena + "digraph G { \n";
     cont = 0;
     vertical = this.raiz;
-
     while (vertical !== null) {
-      cadena +=`"${vertical.nombre}"[shape=box, rankdir=UD, style="filled", label="${vertical.nombre}", pos="0,-${cont.toString()}!"]`;
+      cadena = cadena + `"0${vertical.nombre}"[shape=box, rankdir=UD, style="filled", label="${vertical.nombre}", pos="0,-${cont.toString()}!"]`;
       horizontal = vertical.lts.raiz;
       cont2 = 0;
-
       while (horizontal !== null) {
-        cadena += `"${horizontal.name}"[shape=box, rankdir=LR, style="filled", label="${horizontal.name}", pos="${cont2.toString()},-${cont.toString()}!"]`;
+        cadena = cadena + `"${cont.toString()}${horizontal.name}${cont2.toString()}"[shape=box, rankdir=LR, style="filled", label="${horizontal.name}", pos="${cont2.toString()},-${cont.toString()}!"]`;
         cont2 += 1;
         horizontal = horizontal.siguiente;
       }
-
       cont += 1;
       vertical = vertical.siguiente;
     }
-
     vertical = this.raiz;
-
     while (vertical !== null) {
       if (vertical === this.raiz) {
-        cadena += `"${vertical.nombre}"`;
+        cadena = cadena + `"0${vertical.nombre}"`;
       } else {
-        cadena += `->"${vertical.nombre}"`;
+        cadena = cadena + `->"0${vertical.nombre}"`;
       }
-
       vertical = vertical.siguiente;
     }
-
-    cadena += "\n";
+    cadena = cadena + "\n";
+    cont = 0;
     vertical = this.raiz;
-
     while (vertical !== null) {
       horizontal = vertical.lts.raiz;
-
       if (horizontal !== null) {
-        cadena += `"${vertical.nombre}"->"${horizontal.name}"`;
-
+        cont2 = 0;
+        cadena = cadena + `"0${vertical.nombre}"->"${cont.toString()}${horizontal.name}${cont2.toString()}"`;
         while (horizontal !== null) {
           if (horizontal === vertical.lts.raiz) {
-            cadena += `"${horizontal.name}"`;
+            cadena = cadena + `"${cont.toString()}${horizontal.name}${cont2.toString()}"`;
           } else {
-            cadena += `->"${horizontal.name}"`;
+            cadena = cadena + `->"${cont.toString()}${horizontal.name}${cont2.toString()}"`;
           }
-
+          cont2 += 1;
           horizontal = horizontal.siguiente;
         }
+        cont += 1;
       }
-
-      cadena += "\n";
+      cadena = cadena + "\n";
       vertical = vertical.siguiente;
     }
-
     vertical = this.raiz;
-    cadena += "\n{rank=same;";
-
+    cadena = cadena + "\n{rank=same;";
     while (vertical !== this.ultimo) {
-      cadena += `"${vertical.nombre}",`;
+      cadena = cadena + `"0${vertical.nombre}",`;
       vertical = vertical.siguiente;
     }
-
-    cadena += `"${vertical.nombre}"`;
-    cadena += "}\n";
-    cadena += "}\n";
-
-    d3.select("#lienzo").graphviz().width(1350).height(800).renderDot(cadena);
-
-
+    cadena = cadena + `"0${vertical.nombre}"`;
+    cadena = cadena + "}\n";
+    cadena = cadena + "}\n";
+    d3.select("#lienzo").graphviz().width(700).height(700).renderDot(cadena)
   }
 
 }
