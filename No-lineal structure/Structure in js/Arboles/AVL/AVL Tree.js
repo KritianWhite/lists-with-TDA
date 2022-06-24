@@ -129,3 +129,52 @@ class AVL {
         }
     }
 }
+
+function graficarAVL() {
+    var avl = new AVL()
+    avl.add(5)
+    avl.add(10)	
+    avl.add(20)
+    avl.add(25)
+    avl.add(30)
+    avl.add(35)
+    avl.add(40)
+    document.getElementById("log").innerHTML+='Preorder:  '
+    avl.preorder(avl.root)
+    document.getElementById("log").innerHTML+='<br>Inorder:   '
+    avl.inorder(avl.root)
+    document.getElementById("log").innerHTML+='<br>Postorder: '
+    avl.postorder(avl.root)
+    avl.dot = '{'
+    avl.dotgen(avl.root)
+    avl.dot += '}'
+    //return avl.dot
+
+
+	 // create a network
+	 var container = document.getElementById("mynetwork");
+	 var DOTstring = avl.dot
+	 var parsedData = vis.parseDOTNetwork(DOTstring);
+	 var data = {
+		 nodes: parsedData.nodes,
+		 edges: parsedData.edges
+	 }
+	 var options = {
+		 nodes: {
+			 widthConstraint: 20,
+		 },        
+		 layout: {
+			 hierarchical: {
+				 levelSeparation: 100,
+				 nodeSpacing: 100,
+				 parentCentralization: true,
+				 direction: 'UD',        // UD, DU, LR, RL
+				 sortMethod: 'directed',  // hubsize, directed
+				 shakeTowards: 'roots'  // roots, leaves                        
+			 },
+		 },                        
+	 };
+	 var network = new vis.Network(container, data, options);
+
+}
+graficarAVL()

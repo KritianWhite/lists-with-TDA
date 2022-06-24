@@ -19,6 +19,7 @@ function avl() {
     avl.dotgen(avl.root)
     avl.dot += '}'
 
+    // Usando la libreria vis-network
     let container = document.getElementById("mynetwork");
 	let DOTstring = avl()
 	let parsedData = vis.parseDOTNetwork(DOTstring);
