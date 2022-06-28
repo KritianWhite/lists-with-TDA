@@ -1,6 +1,3 @@
-// MIT License
-// Copyright (c) 2021 Luis Espino
-
 class Node {
 	constructor(value) {
 		this.value 	= value
@@ -130,15 +127,23 @@ class AVL {
     }
 }
 
+
+// Graficando con vis-network
 function graficarAVL() {
     var avl = new AVL()
-    avl.add(5)
-    avl.add(10)	
-    avl.add(20)
-    avl.add(25)
-    avl.add(30)
+    avl.add(11)
+    avl.add(23)	
     avl.add(35)
-    avl.add(40)
+    avl.add(46)
+    avl.add(26)
+    avl.add(83)
+	avl.add(20)
+	avl.add(100)
+	avl.add(54)
+	avl.add(2)
+	avl.add(1)
+	avl.add(6)
+	avl.add(8)
     document.getElementById("log").innerHTML+='Preorder:  '
     avl.preorder(avl.root)
     document.getElementById("log").innerHTML+='<br>Inorder:   '
