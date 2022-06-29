@@ -1,3 +1,13 @@
+/**
+ * 
+ * 
+ *    REVISAR LO DEL D3, TIRA UN ERROR 
+ *    ALGO RARO SOBRE UNAS COMILLAS DOBLES
+ * 
+ * 
+ */
+
+
 class Dic {
   constructor(llave, valor) {
     this._llave = llave;
