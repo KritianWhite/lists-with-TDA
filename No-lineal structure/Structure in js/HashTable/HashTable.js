@@ -153,7 +153,7 @@ class listaSimple {
         }
         nodo_a_borrar = current.siguiente;
         current.siguiente = nodo_a_borrar.siguiente;
-        if(nodo_a_borrar === this.ultimo){
+        if (nodo_a_borrar === this.ultimo) {
           this.ultimo = current;
         }
         return true;
@@ -178,15 +178,14 @@ class listaSimple {
       aux = aux.siguiente;
     }
     aux = this.primero;
-    console.log("ultima llave: ",this.ultimo.dato.llave);
-    while(aux !== this.ultimo){
+    console.log("ultima llave: ", this.ultimo.dato.llave);
+    while (aux !== this.ultimo) {
       //console.log(aux.dato.llave, " -> ", `${aux.siguiente.dato.llave}`)
       cadena += `"${aux.dato.llave}"` + " -> " + `"${aux.siguiente.dato.llave}"[dir=both]` + ';\n';
       aux = aux.siguiente;
     }
     //console.log(cadena);
     return [this.primero.dato.llave, cadena];
-    //d3.select("#lienzo").graphviz().width(1350).height(500).renderDot(cadena);
   }
 }
 
@@ -199,9 +198,9 @@ class HashTable {
   _hash(llave) {
     let hash = 0;
     for (let i = 0; i < llave.length; i++) {
-      hash += llave.charCodeAt(i);
+      hash += llave % this.table.length;;
     }
-    return hash % this.table.length;
+    return hash
   }
 
   set(llave, value) {
@@ -248,7 +247,7 @@ class HashTable {
     return;
   }
 
-  draw(){
+  draw() {
     let temporal, cadena, cont;
     cont = 0;
     cadena = ""
@@ -259,27 +258,28 @@ digraph G {
   node [shape=record,width=.1,height=.1];
   edge[shape=both];\n
 `
-  cadena += `node0[label = " `
-  for(let i = 0; i < this.table.length; i++){ //*Solo para hacer la columna
-    if(i != this.table.length-1) {
-      cadena += `<f${i}>${i} |`
-    }else{
-      cadena += `<f${i}>${i}`
+    cadena += `node0[label = " `
+    for (let i = 0; i < this.table.length; i++) { //*Solo para hacer la columna
+      if (i != this.table.length - 1) {
+        cadena += `<f${i}>${i} |`
+      } else {
+        cadena += `<f${i}>${i}`
+      }
     }
-  }
-  cadena += "\" , height=2.5];\n";
-  cadena += "node[width=1.0];\n";
+    cadena += "\" , height=2.5];\n";
+    cadena += "node[width=1.0];\n";
 
-  for (let i = 0; i < this.table.length; i++) {
-    if (this.table[i] !== undefined) {
-      const [ enlace , sub_cadena ] = [... this.table[i].graficarDot()];
-      cadena += `node0:f${i} -> ${enlace}:l;\n`
-      cadena += sub_cadena;
-      
+    for (let i = 0; i < this.table.length; i++) {
+      if (this.table[i] !== undefined) {
+        const [enlace, sub_cadena] = [... this.table[i].graficarDot()];
+        cadena += `node0:f${i} -> ${enlace}:l;\n`
+        cadena += sub_cadena;
+
+      }
     }
-  }
-  cadena += "}"
-  console.log(cadena)
+    cadena += "}"
+    console.log(cadena)
+    d3.select("#lienzo").graphviz().zoom(false).renderDot(cadena);
   }
 }
 
