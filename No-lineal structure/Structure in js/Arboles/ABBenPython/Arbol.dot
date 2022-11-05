@@ -1,0 +1,17 @@
+digraph G { 
+rankdir=TB; 
+node [shape = record, color=black , style=filled, fillcolor=gray93];
+nodo30[label ="<C0>| 30, carlos |<C1> "]; 
+nodo20[label ="<C0>| 20, kevin |<C1> "]; 
+nodo10[label ="10, pedro"]; 
+nodo20:C0->nodo10
+nodo25[label ="25, asael"]; 
+nodo20:C1->nodo25
+nodo30:C0->nodo20
+nodo40[label ="<C0>| 40, mariano |<C1> "]; 
+nodo35[label ="35, roberto"]; 
+nodo40:C0->nodo35
+nodo45[label ="45, christian"]; 
+nodo40:C1->nodo45
+nodo30:C1->nodo40
+} 
