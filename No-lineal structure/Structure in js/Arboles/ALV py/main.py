@@ -1,0 +1,20 @@
+from AVL import AVL
+
+avl = AVL()
+avl.insertar(5, "hola")
+avl.insertar(9, "hi")
+avl.insertar(13, "saludo")
+avl.insertar(10, "despedida")
+avl.insertar(17, "pensamiento")
+avl.insertar(17, "buenas noches")
+avl.insertar(13, "saludos!!!")
+# avl.insertar(13, "soñar")
+# avl.insertar(6, "alto")
+# avl.insertar(7, "bajo")
+# avl.insertar(16, "medio")
+# avl.insertar(20, "solicitud")
+# avl.insertar(18, "agregar")
+# avl.insertar(23, "quitar")
+
+avl.print()
+avl.graficar(avl.root)

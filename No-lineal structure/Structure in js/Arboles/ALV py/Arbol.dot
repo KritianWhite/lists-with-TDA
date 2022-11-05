@@ -1,0 +1,13 @@
+digraph G { 
+rankdir=TB; 
+node [shape = record, color=black , style=filled, fillcolor=gray93];
+nodo9[label ="<C0>| 9 hi|<C1> "]; 
+nodo5[label =" 5 hola"]; 
+nodo9:C0->nodo5
+nodo13[label ="<C0>| 13 saludo|<C1> "]; 
+nodo10[label =" 10 despedida"]; 
+nodo13:C0->nodo10
+nodo17[label =" 17 pensamiento"]; 
+nodo13:C1->nodo17
+nodo9:C1->nodo13
+} 
