@@ -1,0 +1,8 @@
+digraph G { 
+"0Avion 1"[shape=box, rankdir=UD, style="filled", label="Avion 1", pos="0,-0!"]"0Carlos0"[shape=box, rankdir=LR, style="filled", label="Carlos", pos="0,-0!"]"0Andree1"[shape=box, rankdir=LR, style="filled", label="Andree", pos="1,-0!"]"0Marvin2"[shape=box, rankdir=LR, style="filled", label="Marvin", pos="2,-0!"]"0Juan3"[shape=box, rankdir=LR, style="filled", label="Juan", pos="3,-0!"]"0Avion 2"[shape=box, rankdir=UD, style="filled", label="Avion 2", pos="0,-1!"]"1Marlon0"[shape=box, rankdir=LR, style="filled", label="Marlon", pos="0,-1!"]"1Antonio1"[shape=box, rankdir=LR, style="filled", label="Antonio", pos="1,-1!"]"0Avion 3"[shape=box, rankdir=UD, style="filled", label="Avion 3", pos="0,-2!"]"2Everest0"[shape=box, rankdir=LR, style="filled", label="Everest", pos="0,-2!"]"2Sergio1"[shape=box, rankdir=LR, style="filled", label="Sergio", pos="1,-2!"]"2Miguel2"[shape=box, rankdir=LR, style="filled", label="Miguel", pos="2,-2!"]"2Sara3"[shape=box, rankdir=LR, style="filled", label="Sara", pos="3,-2!"]"2Maria4"[shape=box, rankdir=LR, style="filled", label="Maria", pos="4,-2!"]"2Maria5"[shape=box, rankdir=LR, style="filled", label="Maria", pos="5,-2!"]"0Avion 1"->"0Avion 2"->"0Avion 3"
+"0Avion 1"->"0Carlos0""0Carlos0"->"0Andree1"->"0Marvin2"->"0Juan3"
+"0Avion 2"->"1Marlon0""1Marlon0"->"1Antonio1"
+"0Avion 3"->"2Everest0""2Everest0"->"2Sergio1"->"2Miguel2"->"2Sara3"->"2Maria4"->"2Maria5"
+
+{rank=same;"0Avion 1","0Avion 2","0Avion 3"}
+}

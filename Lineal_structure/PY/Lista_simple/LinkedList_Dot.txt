@@ -1,0 +1,14 @@
+digraph G { 
+rankdir=LR 
+Node0[label="Alan 
+Walker"];
+Node1[label="Christian 
+Blanco"];
+Node0 -> Node1;
+Node2[label="Daniel 
+Barillas"];
+Node1 -> Node2;
+Node3[label="Javier 
+Santos"];
+Node2 -> Node3;
+}

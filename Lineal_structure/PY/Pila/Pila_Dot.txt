@@ -1,0 +1,4 @@
+digraph G {
+label = "Pila" 
+ rankdir=LR;nodo1 [label="Pizza de Salmon | Pizza de Hawaiiana | Pizza de peperoni | " shape = "record" ];
+}

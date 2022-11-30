@@ -1,0 +1,14 @@
+digraph G { 
+rankdir=RL 
+Node0[label="Juan"];
+Node1[label="Jose"];
+Node1 -> Node0;
+Node2[label="Allan"];
+Node2 -> Node1;
+Node3[label="Carlos"];
+Node3 -> Node2;
+Node4[label="Josepo"];
+Node4 -> Node3;
+Node5[label="Luis"];
+Node5 -> Node4;
+}
