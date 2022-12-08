@@ -5,10 +5,20 @@
  */
 package cola;
 
+
 /**
  *
  * @author kriti
  */
 public class Cola {
+    private Nodo frente;
+    private Nodo atras;
+    private int tamanio;
+    
+    public Cola(){
+        this.frente = null;
+        this.atras = null;
+        this.tamanio = 0;
+    }
     
 }
